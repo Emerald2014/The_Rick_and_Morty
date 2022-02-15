@@ -2,6 +2,7 @@ package ru.kudesnik.therickandmorty.model.entities
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.io.StringBufferInputStream
 
 @Parcelize
 data class Character(
@@ -13,5 +14,6 @@ data class Character(
     val gender: String,
     val locationName: String,
     val image: String,
-    val episode: String
+    val episode: String,
+    val firstEpisode: String
 ) : Parcelable

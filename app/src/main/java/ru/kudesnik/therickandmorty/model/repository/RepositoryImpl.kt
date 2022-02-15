@@ -23,7 +23,9 @@ class RepositoryImpl : Repository {
                         gender = dto.results[index].gender,
                         locationName = dto.results[index].location.name,
                         image = dto.results[index].image,
-                        episode = episodeStringToList(dto.results[index].episode)
+                        episode = episodeListToString(dto.results[index].episode),
+                        firstEpisode = firstEpisodeToString(dto.results[index].episode)
+
                     )
                 )
             }
@@ -42,17 +44,25 @@ class RepositoryImpl : Repository {
             gender = dto?.gender ?: "",
             locationName = dto?.location?.name ?: "",
             image = dto?.image ?: "",
-            episode = episodeStringToList(dto?.episode ?: listOf())
+            episode = episodeListToString(dto?.episode ?: listOf()),
+            firstEpisode = firstEpisodeToString(dto?.episode ?: listOf())
         )
     }
 
-    private fun episodeStringToList(episodes: List<String>): String {
+    private fun episodeListToString(episodes: List<String>): String {
         val listOfEpisodeNumbers = StringBuilder()
 
         for (episodeUrl in episodes) {
             listOfEpisodeNumbers.append(episodeUrl.substring(episodeUrl.lastIndexOf('/') + 1)).append(",")
         }
         return listOfEpisodeNumbers.toString()
+    }
+
+    private fun firstEpisodeToString(episodes: List<String>): String {
+        val listOfEpisodeNumbers = StringBuilder()
+        listOfEpisodeNumbers.append(episodes[0].substring(episodes[0].lastIndexOf('/') + 1))
+return listOfEpisodeNumbers.toString()
+
     }
 
     override fun getEpisodesWithCharacter(episodes: String): List<Episode> {

@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import ru.kudesnik.therickandmorty.R
 import ru.kudesnik.therickandmorty.databinding.MainFragmentBinding
 import ru.kudesnik.therickandmorty.databinding.MainItemBinding
 import ru.kudesnik.therickandmorty.model.entities.Character
@@ -33,8 +35,27 @@ class MainAdapter(private val itemClickListener: MainFragment.OnItemViewClickLis
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(character: Character) = with(binding) {
             characterName.text = character.name
-            characterId.text = character.id.toString()
-            root.setOnClickListener{itemClickListener.onItemViewClick(character)}
+            characterLocation.text = character.locationName
+            characterPhoto.load(character.image) {
+                crossfade(true)
+                error(R.drawable.no_image)
+                placeholder(R.drawable.no_poster)
+            }
+            characterEpisode.text = character.firstEpisode
+            characterSpecies.text = character.species
+            characterStatus.text = character.status
+            when(character.status) {
+                "Alive" -> {
+                    characterStatusFlag.load(R.drawable.circle_20_green)
+                }
+                "Dead" -> {
+                    characterStatusFlag.load(R.drawable.circle_20_red)
+                }
+                else -> {
+                    characterStatusFlag.load(R.drawable.circle_20_unknown)
+                }
+            }
+            root.setOnClickListener { itemClickListener.onItemViewClick(character) }
         }
     }
 }
