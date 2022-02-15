@@ -46,7 +46,7 @@ class MainFragment : Fragment() {
             AppState.Loading -> {
                 progressBar.visibility = View.VISIBLE
             }
-            is AppState.Success -> {
+            is AppState.SuccessCharacter -> {
                 progressBar.visibility = View.GONE
                 adapter = MainAdapter(object : OnItemViewClickListener {
                     override fun onItemViewClick(character: Character) {

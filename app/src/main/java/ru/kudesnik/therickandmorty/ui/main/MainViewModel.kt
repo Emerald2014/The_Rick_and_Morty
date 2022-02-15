@@ -18,7 +18,7 @@ private val liveData = MutableLiveData<AppState>()
         liveData.value = AppState.Loading
         viewModelScope.launch (Dispatchers.IO){
             delay(1000)
-            liveData.postValue(AppState.Success(repository.getAllCharacters())) }
+            liveData.postValue(AppState.SuccessCharacter(repository.getAllCharacters())) }
     }
 
 

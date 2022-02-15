@@ -2,6 +2,7 @@ package ru.kudesnik.therickandmorty.model.entities.rest
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.kudesnik.therickandmorty.model.entities.Character
 import ru.kudesnik.therickandmorty.model.entities.Episode
@@ -15,9 +16,8 @@ interface ModelAPI {
     @GET("character")
     fun getListCharacters(): Call<CharacterListDTO>
 
-    @GET("character")
-
-    fun getCharacter(@Query("") characterId: Int): Call<CharacterDTO>
+    @GET("character/{id}")
+    fun getCharacter(@Path("id") characterId: Int): Call<CharacterDTO>
 
     @GET("location")
     fun getLocation(): Call<List<Location>>

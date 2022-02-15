@@ -31,7 +31,9 @@ class RepositoryImpl : Repository {
 
     override fun getCharacter(id: Int): Character {
         val dto = ModelRepo.api.getCharacter(id).execute().body()
-
+  val   episodeList =    if (dto != null) {
+            episodeStringToList(dto.episode)
+        } else listOf()
         return Character(
             id = dto?.id ?: 0,
             name = dto?.name ?: "",
@@ -41,7 +43,7 @@ class RepositoryImpl : Repository {
             gender = dto?.gender ?: "",
             locationName = dto?.location?.name ?: "",
             image = dto?.image ?: "",
-            episode = dto!!.episode
+            episode = episodeList
         )
     }
 
