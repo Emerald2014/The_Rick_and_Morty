@@ -53,7 +53,7 @@ class MainFragment : Fragment() {
                         val manager = activity?.supportFragmentManager
                         manager?.let { manager ->
                             val bundle = Bundle().apply {
-                                putParcelable(CharacterFragment.BUNDLE_EXTRA, character)
+                                putParcelable(CharacterFragment.BUNDLE_CHARACTER, character)
                             }
                             manager.beginTransaction()
                                 .add(R.id.container, CharacterFragment.newInstance(bundle))
