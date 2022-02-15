@@ -34,14 +34,14 @@ class EpisodeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getStringArray(BUNDLE_EPISODE)?.toList()?.let {
+        arguments?.getString(BUNDLE_EPISODE)?.let {
             viewModel.loadEpisodes(it)
             with(binding) {
                 viewModel.episodeLiveData.observe(viewLifecycleOwner) {appState ->
                     when(appState) {
                         is AppState.SuccessEpisode -> {
                             for (i in appState.modelData.indices) {
-                                containerForContacts.addView(TextView(requireContext()).apply { text = appState.modelData[i].id.toString() })
+                                containerForContacts.addView(TextView(requireContext()).apply { text = appState.modelData[i].name.toString() })
 //                            episodeId.text = appState.modelData[i].id.toString()
                         }}
                     }

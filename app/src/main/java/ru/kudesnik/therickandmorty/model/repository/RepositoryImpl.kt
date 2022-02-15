@@ -1,8 +1,10 @@
 package ru.kudesnik.therickandmorty.model.repository
 
+import android.util.Log
 import ru.kudesnik.therickandmorty.model.entities.Character
 import ru.kudesnik.therickandmorty.model.entities.Episode
 import ru.kudesnik.therickandmorty.model.entities.rest.ModelRepo
+import java.lang.StringBuilder
 
 class RepositoryImpl : Repository {
     override fun getAllCharacters(): List<Character> {
@@ -21,7 +23,7 @@ class RepositoryImpl : Repository {
                         gender = dto.results[index].gender,
                         locationName = dto.results[index].location.name,
                         image = dto.results[index].image,
-                        episode = dto.results[index].episode
+                        episode = episodeStringToList(dto.results[index].episode)
                     )
                 )
             }
@@ -31,9 +33,6 @@ class RepositoryImpl : Repository {
 
     override fun getCharacter(id: Int): Character {
         val dto = ModelRepo.api.getCharacter(id).execute().body()
-  val   episodeList =    if (dto != null) {
-            episodeStringToList(dto.episode)
-        } else listOf()
         return Character(
             id = dto?.id ?: 0,
             name = dto?.name ?: "",
@@ -43,30 +42,31 @@ class RepositoryImpl : Repository {
             gender = dto?.gender ?: "",
             locationName = dto?.location?.name ?: "",
             image = dto?.image ?: "",
-            episode = episodeList
+            episode = episodeStringToList(dto?.episode ?: listOf())
         )
     }
 
-    private fun episodeStringToList(episodes: List<String>): List<String> {
-        val listOfEpisodeNumbers = mutableListOf<String>()
+    private fun episodeStringToList(episodes: List<String>): String {
+        val listOfEpisodeNumbers = StringBuilder()
 
         for (episodeUrl in episodes) {
-            listOfEpisodeNumbers.add(episodeUrl.substring(episodeUrl.lastIndexOf('/')))
+            listOfEpisodeNumbers.append(episodeUrl.substring(episodeUrl.lastIndexOf('/') + 1)).append(",")
         }
-        return listOfEpisodeNumbers.toList()
+        return listOfEpisodeNumbers.toString()
     }
 
-    override fun getEpisodesWithCharacter(episodes: List<String>): List<Episode> {
-        episodeStringToList(episodes)
+    override fun getEpisodesWithCharacter(episodes: String): List<Episode> {
+//        episodeStringToList(episodes)
         val dto = ModelRepo.api.getEpisode(episodes).execute().body()
+        Log.d("mytag", episodes)
         val episode = mutableListOf<Episode>()
         if (dto != null) {
-            for (index in dto.results.indices) {
+            for (index in dto.indices) {
                 episode.add(
                     Episode(
-                        id = dto.results[index].id,
-                        name = dto.results[index].name,
-                        characters = dto.results[index].characters,
+                        id = dto[index].id,
+                        name = dto[index].name,
+                        characters = dto[index].characters,
                     )
                 )
 

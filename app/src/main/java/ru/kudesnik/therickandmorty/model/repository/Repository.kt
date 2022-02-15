@@ -6,5 +6,5 @@ import ru.kudesnik.therickandmorty.model.entities.Episode
 interface Repository {
     fun getAllCharacters(): List<Character>
     fun getCharacter(id: Int): Character
-    fun getEpisodesWithCharacter(episodes: List<String>): List<Episode>
+    fun getEpisodesWithCharacter(episodes: String): List<Episode>
 }

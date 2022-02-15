@@ -61,9 +61,9 @@ class CharacterFragment : Fragment() {
                                     val manager = activity?.supportFragmentManager
                                     manager?.let { manager ->
                                         val bundle = Bundle().apply {
-                                            putStringArray(
+                                            putString(
                                                 BUNDLE_EPISODE,
-                                                appState.modelData[0].episode.toTypedArray()
+                                                appState.modelData[0].episode
                                             )
                                         }
 

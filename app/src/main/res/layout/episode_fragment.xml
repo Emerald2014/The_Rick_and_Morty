@@ -6,13 +6,6 @@
     android:background="@color/teal_700"
     tools:context=".ui.episode.EpisodeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:id="@+id/episode_id"
-        android:textSize="30sp"
-        android:layout_height="match_parent"
-        android:text="Hello" />
-
     <LinearLayout
         android:id="@+id/containerForContacts"
         android:layout_width="match_parent"

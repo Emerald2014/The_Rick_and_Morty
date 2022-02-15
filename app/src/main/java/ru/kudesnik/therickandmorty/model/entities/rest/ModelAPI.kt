@@ -22,8 +22,8 @@ interface ModelAPI {
     @GET("location")
     fun getLocation(): Call<List<Location>>
 
-    @GET("episode")
+    @GET("episode/{stringEpisode}")
     fun getEpisode(
-       @Query("") list: List<String>): Call<EpisodeListDTO>
+       @Path("stringEpisode") list: String): Call<List<EpisodeDTO>>
 }
 

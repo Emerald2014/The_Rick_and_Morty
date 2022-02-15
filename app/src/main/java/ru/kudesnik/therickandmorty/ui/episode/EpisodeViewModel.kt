@@ -17,7 +17,7 @@ class EpisodeViewModel(private val repository: Repository) : ViewModel() {
             return localeLiveData
         }
 
-    fun loadEpisodes(listEpisodes: List<String>) = with(viewModelScope) {
+    fun loadEpisodes(listEpisodes: String) = with(viewModelScope) {
         localeLiveData.value = AppState.Loading
         launch(Dispatchers.IO) {
             val dataEpisode = repository.getEpisodesWithCharacter(listEpisodes)
