@@ -30,9 +30,12 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             mainFragmentRecyclerView.adapter = adapter
-            viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
             viewModel.getCharacterListFromServer()
-
+            viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
+            mainSwipe.setOnRefreshListener {
+                viewModel.getCharacterListFromServer()
+                mainSwipe.isRefreshing = false
+            }
         }
     }
 
@@ -48,6 +51,7 @@ class MainFragment : Fragment() {
             }
             is AppState.SuccessCharacter -> {
                 progressBar.visibility = View.GONE
+                mainFragmentRecyclerView.visibility = View.VISIBLE
                 adapter = MainAdapter(object : OnItemViewClickListener {
                     override fun onItemViewClick(character: Character) {
                         val manager = activity?.supportFragmentManager

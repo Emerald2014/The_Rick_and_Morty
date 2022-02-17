@@ -1,5 +1,7 @@
 package ru.kudesnik.therickandmorty.ui.main
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +16,13 @@ import ru.kudesnik.therickandmorty.model.entities.Character
 class MainAdapter(private val itemClickListener: MainFragment.OnItemViewClickListener) :
     RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     private var characterData: List<Character> = listOf()
+
     private lateinit var binding: MainItemBinding
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setCharacters(data: List<Character>) {
         characterData = data
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -26,6 +31,8 @@ class MainAdapter(private val itemClickListener: MainFragment.OnItemViewClickLis
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+        holder.setIsRecyclable(false);
+
         holder.bind(characterData[position])
     }
 
@@ -44,7 +51,7 @@ class MainAdapter(private val itemClickListener: MainFragment.OnItemViewClickLis
             characterEpisode.text = character.firstEpisode
             characterSpecies.text = character.species
             characterStatus.text = character.status
-            when(character.status) {
+            when (character.status) {
                 "Alive" -> {
                     characterStatusFlag.load(R.drawable.circle_20_green)
                 }

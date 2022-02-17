@@ -25,6 +25,7 @@ class EpisodeAdapter() :
     }
 
     override fun onBindViewHolder(holder: EpisodeAdapter.EpisodeViewHolder, position: Int) {
+        holder.setIsRecyclable(false);
         holder.bind(episodeData[position])
     }
 
