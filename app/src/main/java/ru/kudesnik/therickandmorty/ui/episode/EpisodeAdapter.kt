@@ -36,6 +36,7 @@ class EpisodeAdapter() :
         fun bind(episode: Episode) = with(binding) {
             episodeId.text = episode.id.toString()
             episodeName.text = episode.name
+            episodeAirDate.text = episode.air_date
         }
     }
 

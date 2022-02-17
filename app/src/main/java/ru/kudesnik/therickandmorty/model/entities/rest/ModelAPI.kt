@@ -13,7 +13,7 @@ import ru.kudesnik.therickandmorty.model.entities.rest.rest_entities.EpisodeDTO
 import ru.kudesnik.therickandmorty.model.entities.rest.rest_entities.EpisodeListDTO
 
 interface ModelAPI {
-    @GET("character/?sort=id")
+    @GET("character")
     fun getListCharacters(): Call<CharacterListDTO>
 
     @GET("character/{id}")

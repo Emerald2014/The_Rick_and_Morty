@@ -76,6 +76,7 @@ return listOfEpisodeNumbers.toString()
                     Episode(
                         id = dto[index].id,
                         name = dto[index].name,
+                        air_date = dto[index].air_date,
                         characters = dto[index].characters,
                     )
                 )

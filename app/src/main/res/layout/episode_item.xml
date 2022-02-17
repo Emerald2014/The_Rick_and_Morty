@@ -17,17 +17,49 @@
         android:textColor="@color/white"
         android:textSize="@dimen/medium_text_item" />
 
-    <TextView
-        android:id="@+id/episode_name"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-
         android:layout_weight="1"
-        android:text="Это очень длинный текст, настолько длинный, чтобы ему пришломь переноситься по словам"
-        android:textColor="@color/white"
-        android:textSize="@dimen/medium_text_item"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/episode_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+
+            android:layout_weight="1"
+            android:text="Это очень длинный текст, настолько длинный, чтобы ему пришломь переноситься по словам"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text_item"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Air date: "
+                android:textColor="#9e9e9e"
+                android:textSize="@dimen/medium_text_item" />
+
+            <TextView
+                android:id="@+id/episode_air_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_item"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_episode_character_list"

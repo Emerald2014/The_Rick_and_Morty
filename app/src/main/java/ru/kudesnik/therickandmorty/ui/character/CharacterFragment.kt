@@ -35,6 +35,8 @@ class CharacterFragment : Fragment() {
     }
 
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getParcelable<Character>(BUNDLE_CHARACTER)?.let {
