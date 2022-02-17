@@ -11,14 +11,15 @@ import ru.kudesnik.therickandmorty.model.AppState
 import ru.kudesnik.therickandmorty.model.repository.Repository
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
-private val liveData = MutableLiveData<AppState>()
+    private val liveData = MutableLiveData<AppState>()
     fun getLiveData(): LiveData<AppState> = liveData
 
     fun getCharacterListFromServer() {
         liveData.value = AppState.Loading
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             delay(1000)
-            liveData.postValue(AppState.SuccessCharacter(repository.getAllCharacters())) }
+            liveData.postValue(AppState.SuccessCharacter(repository.getAllCharacters()))
+        }
     }
 
 

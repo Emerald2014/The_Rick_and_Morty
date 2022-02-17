@@ -60,7 +60,7 @@ class CharacterFragment : Fragment() {
                         characterStatusFlag.load(R.drawable.circle_20_unknown)
                     }
                 }
-                when(it.id) {
+                when (it.id) {
                     1 -> {
                         btnPrevPage.visibility = View.GONE
                     }
@@ -101,7 +101,7 @@ class CharacterFragment : Fragment() {
                                     manager?.let { manager ->
                                         val bundle = Bundle().apply {
 
-                                            val nextId = appState.modelData[0].id+1
+                                            val nextId = appState.modelData[0].id + 1
                                             putInt(
                                                 BUNDLE_CHARACTER,
                                                 nextId
@@ -122,13 +122,13 @@ class CharacterFragment : Fragment() {
 
 
                             )
+                        }
                     }
                 }
             }
+            viewModel.loadCharacter(it.id)
         }
-        viewModel.loadCharacter(it.id)
     }
-}
 
 /*    private fun openFragment(appState: AppState) {
         val manager = activity?.supportFragmentManager
@@ -150,12 +150,12 @@ class CharacterFragment : Fragment() {
         }
     }*/
 
-companion object {
-    const val BUNDLE_CHARACTER = "character"
-    fun newInstance(bundle: Bundle): CharacterFragment {
-        val fragment = CharacterFragment()
-        fragment.arguments = bundle
-        return fragment
+    companion object {
+        const val BUNDLE_CHARACTER = "character"
+        fun newInstance(bundle: Bundle): CharacterFragment {
+            val fragment = CharacterFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
-}
 }
