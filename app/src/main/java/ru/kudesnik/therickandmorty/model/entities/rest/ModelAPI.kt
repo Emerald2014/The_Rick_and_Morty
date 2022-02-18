@@ -15,11 +15,13 @@ interface ModelAPI {
 
     @GET("character")
     fun getListCharactersWithPage(
-        @Query("page") page: String?): Call<CharacterListDTO>
+        @Query("page") page: String?
+    ): Call<CharacterListDTO>
 
     @GET("character/{listEpisode}")
     fun getListCharactersWithEpisode(
-        @Path("listEpisode") page: String): Call<List<CharacterDTO>>
+        @Path("listEpisode") page: String
+    ): Call<List<CharacterDTO>>
 
     @GET("character/{id}")
     fun getCharacter(@Path("id") characterId: Int): Call<CharacterDTO>
@@ -29,6 +31,7 @@ interface ModelAPI {
 
     @GET("episode/{stringEpisode}")
     fun getEpisode(
-       @Path("stringEpisode") list: String): Call<List<EpisodeDTO>>
+        @Path("stringEpisode") list: String
+    ): Call<List<EpisodeDTO>>
 }
 

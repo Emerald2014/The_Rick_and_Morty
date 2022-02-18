@@ -7,4 +7,14 @@
     <string name="error">Error</string>
     <string name="reload">Reload</string>
     <string name="text_episode_list">Список эпизодов</string>
+    <string name="characters">Characters</string>
+    <string name="character_name">Character name</string>
+    <string name="last_known_location">Last known location:</string>
+    <string name="first_seen_in">First seen in:</string>
+    <string name="episode_screen">Episodes</string>
+    <string name="air_date">Air date:</string>
+    <string name="btn_characters">Персонажи</string>
+    <string name="main_screen">Main screen</string>
+    <string name="character_photo">Character Photo</string>
+    <string name="status_flag">Status flag</string>
 </resources>

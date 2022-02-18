@@ -25,7 +25,6 @@ class RepositoryImpl : Repository {
                         firstEpisode = firstEpisodeToString(dto.results[index].episode),
                         next = dto.info.next,
                         prev = dto.info.prev
-
                     )
                 )
             }
@@ -122,8 +121,9 @@ class RepositoryImpl : Repository {
         return pageNumber.toString()
     }
 
-    override fun getAllCharactersWithEpisode(list: String): List<Character> {
-        val dto = ModelRepo.api.getListCharactersWithEpisode(pageToInt(list)).execute().body()
+    override fun getAllCharactersWithEpisode(listEpisode: String): List<Character> {
+        val dto =
+            ModelRepo.api.getListCharactersWithEpisode(pageToInt(listEpisode)).execute().body()
         val modelList = mutableListOf<Character>()
         if (dto != null) {
             for (index in dto.indices) {

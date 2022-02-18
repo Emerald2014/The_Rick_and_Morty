@@ -28,13 +28,18 @@ class MainAdapter(private val itemClickListener: MainFragment.OnItemViewClickLis
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.setIsRecyclable(false);
-
         holder.bind(characterData[position])
     }
 
-    override fun getItemCount() = characterData.size
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemCount() = characterData.size
 
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(character: Character) = with(binding) {

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/darker_gray"
-            app:subtitle="Main screen"
+            app:subtitle="@string/main_screen"
             app:subtitleTextColor="@color/white"
             app:title="@string/app_name"
             app:titleTextColor="@color/white" />

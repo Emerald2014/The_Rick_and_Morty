@@ -16,7 +16,6 @@ import ru.kudesnik.therickandmorty.databinding.MainFragmentBinding
 import ru.kudesnik.therickandmorty.model.AppState
 import ru.kudesnik.therickandmorty.model.entities.Character
 import ru.kudesnik.therickandmorty.ui.character.CharacterFragment
-import ru.kudesnik.therickandmorty.ui.episode.EpisodeFragment
 
 class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModel()
@@ -75,13 +74,12 @@ class MainFragment : Fragment() {
                 mainFragmentRecyclerView.visibility = View.VISIBLE
 
                 val nav: BottomNavigationView = bottomNavigation
-
                 nav.setOnItemSelectedListener(object :
                     NavigationBarView.OnItemSelectedListener {
                     override fun onNavigationItemSelected(item: MenuItem): Boolean {
                         return when (item.itemId) {
                             R.id.btn_menu_prev_page -> {
-                                if (appState.modelData[0].prev != null) {
+                                if (appState.modelData[0].prev != null || appState.modelData[0].prev == "") {
                                     viewModel.getCharacterListWithPage(appState.modelData[0].prev)
                                 } else {
                                     Toast.makeText(
@@ -150,7 +148,7 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-                fun newInstance() = MainFragment()
+        fun newInstance() = MainFragment()
         const val BUNDLE_MAIN = "main"
         fun newInstance(bundle: Bundle): MainFragment {
             val fragment = MainFragment()

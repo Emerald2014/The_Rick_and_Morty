@@ -2,7 +2,6 @@ package ru.kudesnik.therickandmorty.model.entities
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.io.StringBufferInputStream
 
 @Parcelize
 data class Character(

@@ -1,10 +1,11 @@
 package ru.kudesnik.therickandmorty.ui.episode
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kudesnik.therickandmorty.R
@@ -21,7 +22,7 @@ class EpisodeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = EpisodeFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,44 +39,37 @@ class EpisodeFragment : Fragment() {
                 episodeFragmentRecyclerView.adapter = adapter
                 viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
                 viewModel.loadEpisodes(it)
-
             }
         }
     }
-
-
-/*                viewModel.loadEpisodes(it)
-
-                viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-
-
-                viewModel.episodeLiveData.observe(viewLifecycleOwner) { appState ->
-                    when (appState) {
-                        is AppState.SuccessEpisode -> {
-                            for (i in appState.modelData.indices) {
-//                                    containerForContacts.addView(TextView(requireContext()).apply {
-//                                        text = appState.modelData[i].name.toString()
-//                                    })
-//                            episodeId.text = appState.modelData[i].id.toString()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
-
 
     private fun renderData(appState: AppState) = with(binding) {
         when (appState) {
             is AppState.SuccessEpisode -> {
                 progressBar.visibility = View.GONE
+                val nav: BottomNavigationView = bottomNavigation
+
+                nav.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.btn_menu_prev_page -> {
+                            activity?.onBackPressed()
+                            true
+                        }
+                        else -> {
+                            false
+                        }
+                    }
+                }
+
                 adapter = EpisodeAdapter(object : OnItemViewClickListener {
-                    override fun onItemViewClick(listEpisode:String) {
+                    override fun onItemViewClick(listEpisode: String) {
                         val manager = activity?.supportFragmentManager
                         manager?.let { manager ->
                             val bundle = Bundle().apply {
-                                putString(MainFragment.BUNDLE_MAIN, appState.modelData[0].characters)
+                                putString(
+                                    MainFragment.BUNDLE_MAIN,
+                                    appState.modelData[0].characters
+                                )
                             }
                             manager.beginTransaction()
                                 .add(R.id.container, MainFragment.newInstance(bundle))
@@ -86,7 +80,6 @@ class EpisodeFragment : Fragment() {
                 }).apply { setEpisode(appState.modelData) }
 
                 episodeFragmentRecyclerView.adapter = adapter
-
             }
             is AppState.Loading -> {
                 progressBar.visibility = View.VISIBLE
@@ -102,15 +95,12 @@ class EpisodeFragment : Fragment() {
                                 episodeFragmentRecyclerView.adapter = adapter
 
                                 viewModel.loadEpisodes(it)
-
-
                             }
                         }
                     })
             }
         }
     }
-
 
     private fun View.showSnackBar(
         text: String,
@@ -122,7 +112,7 @@ class EpisodeFragment : Fragment() {
     }
 
     interface OnItemViewClickListener {
-        fun onItemViewClick(listEpisode:String)
+        fun onItemViewClick(listEpisode: String)
     }
 
     companion object {

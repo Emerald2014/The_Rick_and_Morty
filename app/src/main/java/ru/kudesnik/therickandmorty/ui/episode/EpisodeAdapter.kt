@@ -1,14 +1,11 @@
 package ru.kudesnik.therickandmorty.ui.episode
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.kudesnik.therickandmorty.R
 import ru.kudesnik.therickandmorty.databinding.EpisodeItemBinding
 import ru.kudesnik.therickandmorty.model.entities.Episode
-import ru.kudesnik.therickandmorty.ui.main.MainFragment
 
 class EpisodeAdapter(private val itemClickListener: EpisodeFragment.OnItemViewClickListener) :
     RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
@@ -28,12 +25,18 @@ class EpisodeAdapter(private val itemClickListener: EpisodeFragment.OnItemViewCl
     }
 
     override fun onBindViewHolder(holder: EpisodeAdapter.EpisodeViewHolder, position: Int) {
-        holder.setIsRecyclable(false);
         holder.bind(episodeData[position])
     }
 
-    override fun getItemCount() = episodeData.size
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemCount() = episodeData.size
 
     inner class EpisodeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(episode: Episode) = with(binding) {
@@ -41,9 +44,6 @@ class EpisodeAdapter(private val itemClickListener: EpisodeFragment.OnItemViewCl
             episodeName.text = episode.name
             episodeAirDate.text = episode.air_date
             btnEpisodeCharacterList.setOnClickListener { itemClickListener.onItemViewClick(episode.characters) }
-
-
         }
     }
-
 }

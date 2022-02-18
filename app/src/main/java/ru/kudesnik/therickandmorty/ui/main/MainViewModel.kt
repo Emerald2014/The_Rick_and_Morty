@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.kudesnik.therickandmorty.model.AppState
 import ru.kudesnik.therickandmorty.model.repository.Repository
@@ -27,10 +26,17 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             liveData.postValue(AppState.SuccessCharacter(repository.getAllCharactersWithPage(page)))
         }
     }
-    fun getCharacterListWithEpisode(listEpisode:String) {
+
+    fun getCharacterListWithEpisode(listEpisode: String) {
         liveData.value = AppState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            liveData.postValue(AppState.SuccessCharacter(repository.getAllCharactersWithEpisode(listEpisode)))
+            liveData.postValue(
+                AppState.SuccessCharacter(
+                    repository.getAllCharactersWithEpisode(
+                        listEpisode
+                    )
+                )
+            )
         }
     }
 }
