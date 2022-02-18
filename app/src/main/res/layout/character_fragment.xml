@@ -30,8 +30,8 @@
     <ImageView
         android:contentDescription="@string/character_photo"
         android:id="@+id/character_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/character_photo_dimens_big"
+        android:layout_height="@dimen/character_photo_dimens_big"
         android:layout_marginStart="@dimen/margin_details_photo"
         android:layout_marginTop="@dimen/margin_details_between_blocks"
         android:layout_marginEnd="@dimen/margin_details_photo"
