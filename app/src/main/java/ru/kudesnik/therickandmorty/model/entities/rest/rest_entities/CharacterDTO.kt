@@ -9,5 +9,7 @@ data class CharacterDTO(
     val gender: String,
     val location: LocationDTO,
     val image: String,
-    val episode: List<String>
+    val episode: List<String>,
+    val next: String?,
+    val prev: String?
 )

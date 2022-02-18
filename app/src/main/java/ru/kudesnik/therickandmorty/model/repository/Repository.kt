@@ -7,4 +7,6 @@ interface Repository {
     fun getAllCharacters(): List<Character>
     fun getCharacter(id: Int): Character
     fun getEpisodesWithCharacter(episodes: String): List<Episode>
+    fun getAllCharactersWithPage(page: String?): List<Character>
+
 }

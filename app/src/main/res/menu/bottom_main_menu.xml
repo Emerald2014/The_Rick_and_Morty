@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btn_menu_prev_page"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_left_24"
+        android:title="@string/btn_prev_page" />
+
+    <item
+        android:id="@+id/btn_menu_next_page"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"
+        android:title="@string/btn_next_page" />
+</menu>

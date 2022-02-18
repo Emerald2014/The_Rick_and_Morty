@@ -15,5 +15,8 @@ data class Character(
     val locationName: String,
     val image: String,
     val episode: String,
-    val firstEpisode: String
+    val firstEpisode: String,
+    val next: String?,
+    val prev: String?
+
 ) : Parcelable

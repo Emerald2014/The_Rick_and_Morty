@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kudesnik.therickandmorty.R
 import ru.kudesnik.therickandmorty.databinding.EpisodeFragmentBinding
@@ -39,10 +40,11 @@ class EpisodeFragment : Fragment() {
         arguments?.getString(BUNDLE_EPISODE)?.let {
             with(binding) {
                 episodeFragmentRecyclerView.adapter = adapter
-                viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
+                viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
                 viewModel.loadEpisodes(it)
-            }}}
-
+            }
+        }
+    }
 
 
 /*                viewModel.loadEpisodes(it)
@@ -80,23 +82,32 @@ class EpisodeFragment : Fragment() {
                 progressBar.visibility = View.VISIBLE
             }
             is AppState.Error -> {
+                progressBar.visibility = View.GONE
+                episodeFragmentRootView.showSnackBar(
+                    getString(R.string.error),
+                    getString(R.string.reload),
+                    {
+                        arguments?.getString(BUNDLE_EPISODE)?.let {
+                            with(binding) {
+                                episodeFragmentRecyclerView.adapter = adapter
+
+                                viewModel.loadEpisodes(it)
 
 
-                /*Snackbar
-                    .make(
-                        binding.mainFragmentFAB, getString(R.string.error),
-                        Snackbar.LENGTH_INDEFINITE
-                    )
-                    .setAction(getString(R.string.reload)) {
-                        viewModel.getMovieFromLocalSource(
-                            MovieCategory.COMEDY
-                        )
-                    }
-                    .show()*/
-            }
-            else -> {
+                            }
+                        }
+                    })
             }
         }
+    }
+
+    private fun View.showSnackBar(
+        text: String,
+        actionText: String,
+        action: (View) -> Unit,
+        length: Int = Snackbar.LENGTH_INDEFINITE
+    ) {
+        Snackbar.make(this, text, length).setAction(actionText, action).show()
     }
 
     interface OnItemViewClickListener {

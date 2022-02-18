@@ -2,6 +2,8 @@
     <string name="app_name">The Rick and Morty</string>
     <string name="character_status">Alive</string>
     <string name="character_species">Human</string>
-    <string name="btn_next_page"><![CDATA[>]]></string>
-    <string name="btn_prev_page"><![CDATA[<]]></string>
+    <string name="btn_next_page">Next</string>
+    <string name="btn_prev_page">Previous</string>
+    <string name="error">Error</string>
+    <string name="reload">Reload</string>
 </resources>

@@ -17,10 +17,15 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     fun getCharacterListFromServer() {
         liveData.value = AppState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            delay(1000)
             liveData.postValue(AppState.SuccessCharacter(repository.getAllCharacters()))
         }
     }
 
+    fun getCharacterListWithPage(page: String?) {
+        liveData.value = AppState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            liveData.postValue(AppState.SuccessCharacter(repository.getAllCharactersWithPage(page)))
+        }
 
+    }
 }

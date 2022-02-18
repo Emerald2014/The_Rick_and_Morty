@@ -1,10 +1,8 @@
 package ru.kudesnik.therickandmorty.model.repository
 
-import android.util.Log
 import ru.kudesnik.therickandmorty.model.entities.Character
 import ru.kudesnik.therickandmorty.model.entities.Episode
 import ru.kudesnik.therickandmorty.model.entities.rest.ModelRepo
-import java.lang.StringBuilder
 
 class RepositoryImpl : Repository {
     override fun getAllCharacters(): List<Character> {
@@ -24,7 +22,9 @@ class RepositoryImpl : Repository {
                         locationName = dto.results[index].location.name,
                         image = dto.results[index].image,
                         episode = episodeListToString(dto.results[index].episode),
-                        firstEpisode = firstEpisodeToString(dto.results[index].episode)
+                        firstEpisode = firstEpisodeToString(dto.results[index].episode),
+                        next = dto.info.next,
+                        prev = dto.info.prev
 
                     )
                 )
@@ -45,7 +45,9 @@ class RepositoryImpl : Repository {
             locationName = dto?.location?.name ?: "",
             image = dto?.image ?: "",
             episode = episodeListToString(dto?.episode ?: listOf()),
-            firstEpisode = firstEpisodeToString(dto?.episode ?: listOf())
+            firstEpisode = firstEpisodeToString(dto?.episode ?: listOf()),
+            next = "",
+            prev = ""
         )
     }
 
@@ -53,7 +55,8 @@ class RepositoryImpl : Repository {
         val listOfEpisodeNumbers = StringBuilder()
 
         for (episodeUrl in episodes) {
-            listOfEpisodeNumbers.append(episodeUrl.substring(episodeUrl.lastIndexOf('/') + 1)).append(",")
+            listOfEpisodeNumbers.append(episodeUrl.substring(episodeUrl.lastIndexOf('/') + 1))
+                .append(",")
         }
         return listOfEpisodeNumbers.toString()
     }
@@ -61,14 +64,12 @@ class RepositoryImpl : Repository {
     private fun firstEpisodeToString(episodes: List<String>): String {
         val listOfEpisodeNumbers = StringBuilder()
         listOfEpisodeNumbers.append(episodes[0].substring(episodes[0].lastIndexOf('/') + 1))
-return listOfEpisodeNumbers.toString()
+        return listOfEpisodeNumbers.toString()
 
     }
 
     override fun getEpisodesWithCharacter(episodes: String): List<Episode> {
-//        episodeStringToList(episodes)
         val dto = ModelRepo.api.getEpisode(episodes).execute().body()
-        Log.d("mytag", episodes)
         val episode = mutableListOf<Episode>()
         if (dto != null) {
             for (index in dto.indices) {
@@ -80,9 +81,45 @@ return listOfEpisodeNumbers.toString()
                         characters = dto[index].characters,
                     )
                 )
-
             }
         }
         return episode
     }
+
+    override fun getAllCharactersWithPage(page: String?): List<Character> {
+        val dto = ModelRepo.api.getListCharactersWithPage(pageToInt(page)).execute().body()
+        val modelList = mutableListOf<Character>()
+        val nextPage = dto?.info?.let { pageToInt(it.next) }
+        val prevPage = dto?.info?.let { pageToInt(it.prev) }
+        if (dto != null) {
+            for (index in dto.results.indices) {
+                modelList.add(
+                    Character(
+                        id = dto.results[index].id,
+                        name = dto.results[index].name,
+                        status = dto.results[index].status,
+                        species = dto.results[index].species,
+                        type = dto.results[index].type,
+                        gender = dto.results[index].gender,
+                        locationName = dto.results[index].location.name,
+                        image = dto.results[index].image,
+                        episode = episodeListToString(dto.results[index].episode),
+                        firstEpisode = firstEpisodeToString(dto.results[index].episode),
+                        next = nextPage,
+                        prev = prevPage
+                    )
+                )
+            }
+        }
+        return modelList
+    }
+
+    private fun pageToInt(page: String?): String {
+        val pageNumber = StringBuilder()
+        if (page != null) {
+            pageNumber.append(page.substring(page.lastIndexOf('=') + 1))
+        }
+        return pageNumber.toString()
+    }
 }
+

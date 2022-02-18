@@ -16,6 +16,12 @@ interface ModelAPI {
     @GET("character")
     fun getListCharacters(): Call<CharacterListDTO>
 
+    @GET("character")
+    fun getListCharactersWithPage(
+        @Query("page") page: String?): Call<CharacterListDTO>
+
+//    @Path("page")page: String?): Call<CharacterListDTO>
+
     @GET("character/{id}")
     fun getCharacter(@Path("id") characterId: Int): Call<CharacterDTO>
 
