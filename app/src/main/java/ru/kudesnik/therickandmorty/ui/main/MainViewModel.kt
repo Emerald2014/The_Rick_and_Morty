@@ -26,6 +26,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             liveData.postValue(AppState.SuccessCharacter(repository.getAllCharactersWithPage(page)))
         }
-
+    }
+    fun getCharacterListWithEpisode(listEpisode:String) {
+        liveData.value = AppState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            liveData.postValue(AppState.SuccessCharacter(repository.getAllCharactersWithEpisode(listEpisode)))
+        }
     }
 }

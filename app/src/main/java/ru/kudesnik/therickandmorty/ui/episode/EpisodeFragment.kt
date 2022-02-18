@@ -1,20 +1,16 @@
 package ru.kudesnik.therickandmorty.ui.episode
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kudesnik.therickandmorty.R
 import ru.kudesnik.therickandmorty.databinding.EpisodeFragmentBinding
 import ru.kudesnik.therickandmorty.model.AppState
-import ru.kudesnik.therickandmorty.model.entities.Character
-import ru.kudesnik.therickandmorty.model.entities.Episode
-import ru.kudesnik.therickandmorty.ui.character.CharacterFragment
+import ru.kudesnik.therickandmorty.ui.main.MainFragment
 
 class EpisodeFragment : Fragment() {
     private val viewModel: EpisodeViewModel by viewModel()
@@ -42,6 +38,7 @@ class EpisodeFragment : Fragment() {
                 episodeFragmentRecyclerView.adapter = adapter
                 viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
                 viewModel.loadEpisodes(it)
+
             }
         }
     }
@@ -73,7 +70,20 @@ class EpisodeFragment : Fragment() {
         when (appState) {
             is AppState.SuccessEpisode -> {
                 progressBar.visibility = View.GONE
-                adapter = EpisodeAdapter().apply { setEpisode(appState.modelData) }
+                adapter = EpisodeAdapter(object : OnItemViewClickListener {
+                    override fun onItemViewClick(listEpisode:String) {
+                        val manager = activity?.supportFragmentManager
+                        manager?.let { manager ->
+                            val bundle = Bundle().apply {
+                                putString(MainFragment.BUNDLE_MAIN, appState.modelData[0].characters)
+                            }
+                            manager.beginTransaction()
+                                .add(R.id.container, MainFragment.newInstance(bundle))
+                                .addToBackStack("")
+                                .commitAllowingStateLoss()
+                        }
+                    }
+                }).apply { setEpisode(appState.modelData) }
 
                 episodeFragmentRecyclerView.adapter = adapter
 
@@ -101,6 +111,7 @@ class EpisodeFragment : Fragment() {
         }
     }
 
+
     private fun View.showSnackBar(
         text: String,
         actionText: String,
@@ -111,7 +122,7 @@ class EpisodeFragment : Fragment() {
     }
 
     interface OnItemViewClickListener {
-        fun onItemViewClick(character: Character)
+        fun onItemViewClick(listEpisode:String)
     }
 
     companion object {

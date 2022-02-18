@@ -78,7 +78,7 @@ class RepositoryImpl : Repository {
                         id = dto[index].id,
                         name = dto[index].name,
                         air_date = dto[index].air_date,
-                        characters = dto[index].characters,
+                        characters = episodeListToString(dto[index].characters),
                     )
                 )
             }
@@ -121,5 +121,32 @@ class RepositoryImpl : Repository {
         }
         return pageNumber.toString()
     }
+
+    override fun getAllCharactersWithEpisode(list: String): List<Character> {
+        val dto = ModelRepo.api.getListCharactersWithEpisode(pageToInt(list)).execute().body()
+        val modelList = mutableListOf<Character>()
+        if (dto != null) {
+            for (index in dto.indices) {
+                modelList.add(
+                    Character(
+                        id = dto[index].id,
+                        name = dto[index].name,
+                        status = dto[index].status,
+                        species = dto[index].species,
+                        type = dto[index].type,
+                        gender = dto[index].gender,
+                        locationName = dto[index].location.name,
+                        image = dto[index].image,
+                        episode = episodeListToString(dto[index].episode),
+                        firstEpisode = firstEpisodeToString(dto[index].episode),
+                        next = "",
+                        prev = ""
+                    )
+                )
+            }
+        }
+        return modelList
+    }
 }
+
 

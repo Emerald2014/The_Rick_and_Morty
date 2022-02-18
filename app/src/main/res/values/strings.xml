@@ -6,4 +6,5 @@
     <string name="btn_prev_page">Previous</string>
     <string name="error">Error</string>
     <string name="reload">Reload</string>
+    <string name="text_episode_list">Список эпизодов</string>
 </resources>

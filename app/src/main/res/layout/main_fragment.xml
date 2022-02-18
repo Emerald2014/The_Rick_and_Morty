@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/darker_gray"
-
             app:subtitle="Main screen"
             app:subtitleTextColor="@color/white"
             app:title="@string/app_name"
@@ -32,18 +31,15 @@
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize"
         android:paddingBottom="?attr/actionBarSize"
-
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainFragmentRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
- />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
@@ -62,10 +58,9 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_main_menu" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

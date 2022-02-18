@@ -8,6 +8,7 @@ import coil.load
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Job
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kudesnik.therickandmorty.R
 import ru.kudesnik.therickandmorty.databinding.CharacterFragmentBinding
@@ -83,6 +84,7 @@ class CharacterFragment : Fragment() {
                         is AppState.SuccessCharacter -> {
                             progressBar.visibility = View.GONE
 
+                            //Навигация между персонажами
                             nav.setOnItemSelectedListener(object :
                                 NavigationBarView.OnItemSelectedListener {
                                 override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -93,6 +95,26 @@ class CharacterFragment : Fragment() {
                                                 "Жму назад",
                                                 Toast.LENGTH_SHORT
                                             ).show()
+                                            viewModel.loadCharacter(appState.modelData[0].id - 1)
+                                            val manager = activity?.supportFragmentManager
+                                            manager?.let { manager ->
+                                                val bundle = Bundle().apply {
+                                                    putParcelable(
+                                                        BUNDLE_CHARACTER,
+                                                        it
+                                                    )
+                                                }
+
+                                                manager.beginTransaction()
+                                                    .replace(
+                                                        R.id.container,
+                                                        newInstance(bundle)
+                                                    )
+                                                    .addToBackStack("")
+                                                    .commitAllowingStateLoss()
+                                            }
+
+
                                             true
                                         }
                                         R.id.btn_menu_episode_character_list -> {
@@ -134,7 +156,7 @@ class CharacterFragment : Fragment() {
                                             val manager = activity?.supportFragmentManager
                                             manager?.let { manager ->
                                                 val bundle = Bundle().apply {
-                                                    viewModel.loadCharacterData(it.id+1)
+                                                    viewModel.loadCharacterData(it.id + 1)
                                                     putParcelable(
                                                         BUNDLE_CHARACTER,
                                                         appState.modelData[0]
@@ -249,6 +271,10 @@ class CharacterFragment : Fragment() {
             }
             viewModel.loadCharacter(it.id)
         }
+    }
+
+    private fun putParcelable(bundleCharacter: String, loadCharacter: Job) {
+
     }
 
     /*    private fun openFragment(appState: AppState) {

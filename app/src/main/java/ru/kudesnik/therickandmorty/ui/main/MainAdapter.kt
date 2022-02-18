@@ -1,15 +1,12 @@
 package ru.kudesnik.therickandmorty.ui.main
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.kudesnik.therickandmorty.R
-import ru.kudesnik.therickandmorty.databinding.MainFragmentBinding
 import ru.kudesnik.therickandmorty.databinding.MainItemBinding
 import ru.kudesnik.therickandmorty.model.entities.Character
 

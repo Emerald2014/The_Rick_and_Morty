@@ -4,13 +4,10 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.kudesnik.therickandmorty.model.entities.Character
-import ru.kudesnik.therickandmorty.model.entities.Episode
 import ru.kudesnik.therickandmorty.model.entities.Location
 import ru.kudesnik.therickandmorty.model.entities.rest.rest_entities.CharacterDTO
 import ru.kudesnik.therickandmorty.model.entities.rest.rest_entities.CharacterListDTO
 import ru.kudesnik.therickandmorty.model.entities.rest.rest_entities.EpisodeDTO
-import ru.kudesnik.therickandmorty.model.entities.rest.rest_entities.EpisodeListDTO
 
 interface ModelAPI {
     @GET("character")
@@ -20,7 +17,9 @@ interface ModelAPI {
     fun getListCharactersWithPage(
         @Query("page") page: String?): Call<CharacterListDTO>
 
-//    @Path("page")page: String?): Call<CharacterListDTO>
+    @GET("character/{listEpisode}")
+    fun getListCharactersWithEpisode(
+        @Path("listEpisode") page: String): Call<List<CharacterDTO>>
 
     @GET("character/{id}")
     fun getCharacter(@Path("id") characterId: Int): Call<CharacterDTO>
